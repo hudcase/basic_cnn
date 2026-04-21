@@ -1,0 +1,28 @@
+import torch
+input = [3,4,6,5,7,
+        2,4,6,8,2,
+        1,6,7,8,4,
+        9,7,4,6,2,
+        3,7,5,4,1]
+input = torch.Tensor(input).view(1, 1, 5, 5)
+
+conv_layer = torch.nn.Conv2d(1, 1, kernel_size=3,  stride=2,  bias=False)
+
+kernel = torch.Tensor([1,2,3,4,5,6,7,8,9]).view(1, 1, 3, 3)
+
+conv_layer.weight.data = kernel.data
+
+print(conv_layer.weight.data )
+output = conv_layer(input)
+print(output)
+
+'''
+tensor([[[[1., 2., 3.],
+          [4., 5., 6.],
+          [7., 8., 9.]]]])
+tensor([[[[ 91., 168., 224., 215., 127.],
+          [114., 211., 295., 262., 149.],
+          [192., 259., 282., 214., 122.],
+          [194., 251., 253., 169.,  86.],
+          [ 96., 112., 110.,  68.,  31.]]]], grad_fn=<ConvolutionBackward0>)
+'''
